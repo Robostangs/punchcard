@@ -11,9 +11,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141229210831) do
+ActiveRecord::Schema.define(version: 20150101011301) do
 
-  create_table "users", force: :cascade do |t|
+  create_table "attendances", force: true do |t|
+    t.boolean  "present"
+    t.time     "in_time"
+    t.time     "out_time"
+    t.integer  "user_id"
+    t.integer  "meeting_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events", force: true do |t|
+    t.string   "title"
+    t.string   "descriprion"
+    t.integer  "max_slots"
+    t.date     "event_date"
+    t.string   "signup_deadline_date"
+    t.float    "credits"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "meetings", force: true do |t|
+    t.date     "meeting_date"
+    t.boolean  "mandatory"
+    t.string   "day"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "signups", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.boolean  "confirmed"
+    t.float    "credits_earned"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "strikes", force: true do |t|
+    t.date     "date_given"
+    t.string   "reason"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "school_id"
