@@ -15,6 +15,6 @@
 #  updated_at           :datetime
 #
 
-class Events < ActiveRecord::Base
+class Event < ActiveRecord::Base
   has_many :users, :through => :signups
 end
