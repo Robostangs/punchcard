@@ -43,4 +43,8 @@ class User < ActiveRecord::Base
   def signup_for(event)
     Signup.create({user: self, event: event})
   end
+
+  def backout_from(event)
+    Signup.where({user: self, event: event}).destroy_all
+  end
 end

@@ -40,4 +40,28 @@ RSpec.describe User, :type => :model do
     end
   end
 
+  describe 'backout from' do
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      @event = FactoryGirl.create(:event)
+      @user.signup_for(@event)
+    end
+    
+    it 'removes the user from the event' do
+      @user.backout_from(@event)
+      expect(@user.events).not_to include @event
+    end
+
+    it 'removes the event from the user' do
+      @user.backout_from(@event)
+      expect(@event.users).not_to include @user
+    end
+
+    it 'does not allow the user to backout past the deadline' do
+      @event.signup_deadline_date = Time.now - 5.minutes
+      @event.save
+      expect(@event.users).to include @user
+      expect(@user.events).to include @event
+    end
+  end
 end
