@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150101011301) do
+ActiveRecord::Schema.define(version: 20150102195155) do
 
   create_table "attendances", force: true do |t|
     t.boolean  "present"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20150101011301) do
     t.string   "descriprion"
     t.integer  "max_slots"
     t.date     "event_date"
-    t.string   "signup_deadline_date"
+    t.datetime "signup_deadline_date", limit: 255
     t.float    "credits"
     t.time     "start_time"
     t.time     "end_time"
