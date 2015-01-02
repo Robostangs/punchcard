@@ -39,4 +39,8 @@ class User < ActiveRecord::Base
   def meetings_attendance_percent
 
   end
+
+  def signup_for(event)
+    Signup.create({user: self, event: event})
+  end
 end
