@@ -41,13 +41,23 @@ class User < ActiveRecord::Base
   end
 
   def signup_for(event)
-    if Time.now < event.signup_deadline_date
+    if event.nil?                                           # Event doesn't exist
+      false
+    elsif Signup.where({user: self, event: event}).any?     # Existing signup
+      false
+    elsif event.signup_deadline_date < Time.now             # Past deadline
+      false
+    else
       Signup.create({user: self, event: event})
     end
   end
 
   def backout_from(event)
-    if Time.now < event.signup_deadline_date
+    if event.nil?                                           # Event doesn't exist
+      false
+    elsif event.signup_deadline_date < Time.now             # Past deadline
+      false
+    else
       Signup.where({user: self, event: event}).destroy_all
     end
   end
