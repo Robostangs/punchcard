@@ -40,6 +40,10 @@ class User < ActiveRecord::Base
 
   end
 
+  def full_name
+    self.first_name + ' ' + self.last_name
+  end
+
   def signup_for(event)
     if event.nil?                                           # Event doesn't exist
       false
@@ -60,5 +64,36 @@ class User < ActiveRecord::Base
     else
       Signup.where({user: self, event: event}).destroy_all
     end
+  end
+  def confirmed_credits
+    confirmed_creditss = 0.0;
+    self.signups.each do |signup|
+      if signup.confirmed then confirmed_creditss += signup.credits_earned end
+    end
+    confirmed_creditss
+  end
+
+  def pending_credits
+    pending_creditss = 0.0
+    self.singups.each do |signup|
+      if not signup.confirmed then pending_creditss += signup.credits_earned end
+    end
+    pending_creditss
+  end
+
+  def total_credits
+    (self.pending_credits + self.confirmed_credits)
+  end
+
+  def meeting_attendance
+    present_at = 0
+    self.attendances.each { |attend| if attend.present then present_at += 1 end }
+    (present_at / self.attendances.count.to_f) * 100
+  end
+
+  def missed_mandatory_meetings
+    missed = 0
+    self.attendances.each { |attend| if attend.mandatory and not attend.present then missed += 1 end }
+    missed
   end
 end
