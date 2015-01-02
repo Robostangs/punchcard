@@ -26,7 +26,17 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :attendances
+  has_many :strikes
   has_many :events, :through => :signups
   has_many :meetings, :through => :attendances
-  has_many :strikes 
+  has_many :signups
+
+
+  def number_of_strikes
+    self.strikes.count
+  end
+  def meetings_attendance_percent
+
+  end
 end
