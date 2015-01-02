@@ -9,8 +9,9 @@ class EventsController < ApplicationController
   end
   def destroy
   end
-  def singup
-    @event = Event.where(id: params[:id])
+
+  def signup
+    @event = Event.find(params[:id])
     if current_user.signup_for(@event)
       flash[:notice] = "Signed Up for Event"
       redirect_to event_path(@event)
@@ -19,8 +20,9 @@ class EventsController < ApplicationController
       redirect_to event_path(@event)
     end
   end
-  def signdown
-    @event = Event.where(id: params[:id])
+
+  def backout
+    @event = Event.find(params[:id])
     if current_user.backout_from(@event)
       flash[:notice] = "Succesufly Backed Out!"
       redirect_to event_path(@event)

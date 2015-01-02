@@ -4,8 +4,8 @@ Rails.application.routes.draw do
 
   resources :events do
     member do
-      post 'signup'
-      post 'backout'
+      patch 'signup'
+      patch 'backout'
     end
   end
 

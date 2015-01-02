@@ -12,21 +12,21 @@ RSpec.describe EventsController, :type => :controller do
     @event = FactoryGirl.create(:event)
   end
 
-  describe "POST signup" do
+  describe "PATCH signup" do
     it 'adds the event to the user' do
-      post :signup, {id: @event.id}
+      patch :signup, {id: @event.id}
       expect(@event.users).to include user
     end
 
     it 'adds the user to the event' do
-      post :signup, {id: @event.id}
+      patch :signup, {id: @event.id}
       expect(user.events).to include @event
     end
 
     it 'does not allow a user to signup past the deadline' do
       @event.signup_deadline_date = Time.now - 5.minutes
       @event.save
-      post :signup, {id: @event.id}
+      put :signup, {id: @event.id}
       expect(user.events).not_to include @event
     end
   end
