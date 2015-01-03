@@ -83,9 +83,9 @@ GEM
     formtastic (3.1.2)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.1.1)
-    foundation-rails (5.5.0.0)
+    foundation-rails (5.4.5.0)
       railties (>= 3.1.0)
-      sass (>= 3.2.0, < 3.4)
+      sass (>= 3.2.0)
     has_scope (0.6.0.rc)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
@@ -217,7 +217,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   faker
-  foundation-rails
+  foundation-rails (= 5.4.5.0)
   jbuilder (~> 2.0)
   jquery-rails
   puma

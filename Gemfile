@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'puma'
-gem 'foundation-rails'
+gem 'foundation-rails', '5.4.5.0'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
