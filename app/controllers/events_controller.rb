@@ -24,7 +24,7 @@ class EventsController < ApplicationController
   def backout
     @event = Event.find(params[:id])
     if current_user.backout_from(@event)
-      flash[:notice] = "Succesufly Backed Out!"
+      flash[:notice] = "Successfully Backed Out!"
       redirect_to event_path(@event)
     else
       flash[:error] = "Back Out Deadline has Passed!"

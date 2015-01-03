@@ -18,7 +18,7 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :string(255)
 #  last_sign_in_ip        :string(255)
-#
+#  admin                  :boolean
 
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
@@ -26,18 +26,14 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :signups
   has_many :attendances
   has_many :strikes
   has_many :events, :through => :signups
   has_many :meetings, :through => :attendances
-  has_many :signups
-
 
   def number_of_strikes
     self.strikes.count
-  end
-  def meetings_attendance_percent
-
   end
 
   def full_name
@@ -65,6 +61,7 @@ class User < ActiveRecord::Base
       Signup.where({user: self, event: event}).destroy_all
     end
   end
+
   def confirmed_credits
     confirmed_creditss = 0.0;
     self.signups.each do |signup|
