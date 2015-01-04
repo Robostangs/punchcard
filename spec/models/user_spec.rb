@@ -65,4 +65,40 @@ RSpec.describe User, :type => :model do
       expect(@user.backout_from(@event)).to be_falsy
     end
   end
+
+  context 'Attendance' do
+
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+
+      # Signup for 5 events
+      5.times do
+        event = FactoryGirl.create(:event)
+        @user.signup_for(event)
+        signup = @user.signups.last
+        signup.credits_earned = 1
+        signup.confirmed = false
+        signup.save
+      end
+
+      # Confirm 2 events
+      @user.signups.take(2).each do |signup|
+        signup.confirmed = true
+        signup.save
+      end
+    end
+
+    it 'has confirmed credits' do
+      expect(@user.confirmed_credits).to eq 2
+    end
+
+    it 'has pending credits' do
+      expect(@user.pending_credits).to eq 3
+    end
+
+    it 'has total credits' do
+      expect(@user.total_credits).to eq 5
+    end
+  end
+
 end

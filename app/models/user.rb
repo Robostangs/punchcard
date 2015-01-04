@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
 
   def pending_credits
     pending_creditss = 0.0
-    self.singups.each do |signup|
+    self.signups.each do |signup|
       if not signup.confirmed then pending_creditss += signup.credits_earned end
     end
     pending_creditss
