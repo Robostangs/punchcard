@@ -76,7 +76,7 @@ RSpec.describe User, :type => :model do
         event = FactoryGirl.create(:event)
         @user.signup_for(event)
         signup = @user.signups.last
-        signup.credits_earned = 1
+        signup.credits_earned = 2
         signup.confirmed = false
         signup.save
       end
@@ -89,15 +89,15 @@ RSpec.describe User, :type => :model do
     end
 
     it 'has confirmed credits' do
-      expect(@user.confirmed_credits).to eq 2
+      expect(@user.confirmed_credits).to eq 4
     end
 
     it 'has pending credits' do
-      expect(@user.pending_credits).to eq 3
+      expect(@user.pending_credits).to eq 6
     end
 
     it 'has total credits' do
-      expect(@user.total_credits).to eq 5
+      expect(@user.total_credits).to eq 10
     end
   end
 

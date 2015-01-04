@@ -63,23 +63,15 @@ class User < ActiveRecord::Base
   end
 
   def confirmed_credits
-    confirmed_creditss = 0.0;
-    self.signups.each do |signup|
-      if signup.confirmed then confirmed_creditss += signup.credits_earned end
-    end
-    confirmed_creditss
+    signups.confirmed.map(&:credits_earned).reduce(:+)
   end
 
   def pending_credits
-    pending_creditss = 0.0
-    self.signups.each do |signup|
-      if not signup.confirmed then pending_creditss += signup.credits_earned end
-    end
-    pending_creditss
+    signups.unconfirmed.map(&:credits_earned).reduce(:+)
   end
 
   def total_credits
-    (self.pending_credits + self.confirmed_credits)
+    pending_credits + confirmed_credits
   end
 
   def meeting_attendance

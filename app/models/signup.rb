@@ -14,4 +14,7 @@
 class Signup < ActiveRecord::Base
   belongs_to :user
   belongs_to :event
+
+  scope :confirmed,   -> { where(confirmed: true) }
+  scope :unconfirmed, -> { where(confirmed: false) }
 end
