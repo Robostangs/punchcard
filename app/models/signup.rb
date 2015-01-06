@@ -12,6 +12,11 @@
 #
 
 class Signup < ActiveRecord::Base
+  before_create :set_credits
   belongs_to :user
   belongs_to :event
+
+  def set_credits
+    self.credits_earned = self.event.credits
+  end
 end

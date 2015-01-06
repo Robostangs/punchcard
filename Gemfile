@@ -1,11 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'puma'
-gem 'foundation-rails', '5.4.5.0'
-
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.4'
+gem 'rails', '4.1.8'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -29,18 +26,6 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
-group :development, :test do
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
-  gem 'faker'
-end
-
-gem 'activeadmin', github: 'activeadmin'
-
-gem 'devise'
-
-gem 'will_paginate'
-
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -53,4 +38,24 @@ gem 'will_paginate'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# Use rspec for TDD (test driven development)
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'faker'
+end
+
+# Use devise for user authentication
+gem 'devise'
+
+# Use annotate for easier schema access
 gem 'annotate'
+
+# Use activeadmin for easy admin interfaces
+gem 'activeadmin', github: 'activeadmin'
+
+# Use foundation for clean user interfaces
+gem 'foundation-rails', '5.4.5.0'
+
+# Use simple_form for easy form creation
+gem 'simple_form'

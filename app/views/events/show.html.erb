@@ -1,0 +1,26 @@
+<div class = "panel">
+  <b>Title: </b><%= @event.title %><br>
+  <b>Description: </b><%= @event.description %><br>
+  <b>Location: </b><%= @event.location %><br>
+  <b>Event date: </b><%= @event.event_date %><br>
+  <b>Start time: </b><%= @event.start_time %><br>
+  <b>End time: </b><%= @event.end_time %><br>
+  <b>Credits: </b><%= @event.credits %><br>
+  <b>Max slots: </b><%= @event.max_slots %><br>
+</div>
+
+<div class = "panel">
+  <% if @event.users.empty? %>
+    <b>No users are signed up yet.</b>
+  <% else %>
+    <b>Currently signed up: </b>
+      <% @event.users.each do |user| %>
+        <%= user.name %>
+      <% end %>
+  <% end %>
+</div>
+<% if @event.users.include? current_user %>
+  <%= link_to 'Remove myself from this event.', signup_event_path, :class => "button" %>
+<% else %>
+  <%= link_to 'Sign up for this event.', backout_event_path, :class => "button" %>
+<% end %>

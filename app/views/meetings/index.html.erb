@@ -1,0 +1,31 @@
+<h3>Meetings</h3>
+<table style = "width: 100%; text-align: center;">
+  <thread>
+    <tr>
+      <th width = "150">Meeting date</th>
+      <th width = "150">Meeting time</th>
+      <th width = "150">Description</th>
+      <th width = "150">Mandatory?</th>
+      <th width = "150">Attended?</th>
+      <% if current_user.admin? %>
+        <th width = "150">Start attendance</th>
+      <% end %>
+    </tr>
+  </thread>
+  <tbody>
+    <% @meeting.each do |meeting| %>
+      <tr>
+        <td><%= meeting.meeting_date %></td>
+        <td><%= meeting.meeting_time %></td>
+        <td><%= meeting.description %></td>
+        <td><%= if meeting.mandatory? then 'Yes' else 'No' end %></td>
+        <td><%= if (current_user.attendances.where(meeting_id: meeting.id)).present? then 'Yes' else 'No' end %></td>
+        <td>
+        <% if current_user.admin? %>
+          <%= link_to "Take attendance for this meeting.", check_meeting_path(@meeting) %>
+        <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

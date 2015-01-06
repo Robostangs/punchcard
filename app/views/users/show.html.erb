@@ -1,12 +1,56 @@
-<p>
-  <b>Name</b>
-  <%= @user.full_name %>
-</p>
-<p>
-  <b>ID</b>
-  <%= @user.school_id %>
-</p>
-<p>
-  <b>Email</b>
-  <%= @user.email %>
-</p>
+<div class = "panel">
+  <h1>User info</h1>
+  <p>
+    <b>Name: </b><%= @user.name %><br>
+    <b>Email: </b><%= @user.email %><br>
+    <b>Student ID: </b><%= @user.student_id %><br>
+    <b>Strikes: </b><%= @user.number_of_strikes %><br>
+    <% @strike.each do |strike| %>
+      One strike given at <%= strike.created_at %> because <%= strike.reason %><br>
+    <% end %>
+  </p>
+</div>
+
+<div class = "panel">
+  <h1>Meeting info</h1>
+  <b>Meeting attendance statistic: </b><%= @user.meeting_statistic %><br>
+  <b>Meeting attendance percentage: </b><%= @user.meeting_attendance %><br>
+  <b>Missed mandatory meetings: </b><%= @user.missed_mandatory_meetings %><br>
+</div>
+
+<div class = "panel">
+  <h1>Event info</h1>
+  <b>Confirmed credits: </b><%= @user.confirmed_credits %><br>
+  <b>Pending credits: </b><%= @user.pending_credits %><br>
+  <b>Total credits: </b><%= @user.total_credits %><br>
+  <br>
+  <div class = "panel">
+    <h3>Your signups</h3>
+    <table style = "margin-top: 10px; margin-bottom: 6px">
+      <thread>
+        <tr>
+          <th>Title</th>
+          <th>Event date</th>
+          <th>Confirmed?</th>
+        </tr>
+      </thread>
+      <tbody>
+        <% @user.signups.each do |signup| %>
+        <tr>
+          <td><%= link_to signup.event.title, signup.event %>
+          <td><%= signup.event.event_date %></td>
+          <td>
+            <% if signup.confirmed %>
+              Yes
+            <% else %>
+              No
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= link_to "Edit details", edit_user_registration_path, :class => "button", :style => "margin-left: 1.5%" %>

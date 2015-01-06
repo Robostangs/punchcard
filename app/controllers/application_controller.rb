@@ -5,9 +5,11 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   def authenticate_admin!
-    if current_user.admin == false
+    if current_user && current_user.admin?
+      # Good to go.
+    elsif current_user && !(current_user.admin?)
+      redirect_to root_path
       flash[:alert] = "You are not an admin. Redirected."
-      redirect_to new_user_session_path
     end
   end
 end

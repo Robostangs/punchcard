@@ -1,0 +1,25 @@
+<h3>Events</h3>
+<table style = "width: 100%; text-align: center;">
+  <thread>
+    <tr>
+      <th width = "150">Date</th>
+      <th width = "150">Start time</th>
+      <th width = "150">End time</th>
+      <th width = "150">Title</th>
+      <th width = "150">Open spots</th>
+      <th width = "150">Credits</th>
+    </tr>
+  </thread>
+  <tbody>
+    <% @event.each do |event| %>
+    <tr>
+      <td><%= event.event_date %></td>
+      <td><%= event.start_time %></td>
+      <td><%= event.end_time %></td>
+      <td><u><%= link_to event.title, event %></u></td>
+      <td><%= event.slots_left %></td>
+      <td><%= event.credits %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

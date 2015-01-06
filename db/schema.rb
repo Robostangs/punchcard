@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150103001626) do
+ActiveRecord::Schema.define(version: 20150105222444) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -29,32 +29,34 @@ ActiveRecord::Schema.define(version: 20150103001626) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
 
   create_table "attendances", force: true do |t|
-    t.boolean  "present"
-    t.time     "in_time"
-    t.time     "out_time"
     t.integer  "user_id"
     t.integer  "meeting_id"
+    t.time     "in_time"
+    t.time     "out_time"
+    t.boolean  "present",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "events", force: true do |t|
     t.string   "title"
-    t.string   "descriprion"
-    t.integer  "max_slots"
+    t.string   "description"
+    t.string   "location"
     t.date     "event_date"
-    t.datetime "signup_deadline_date", limit: 255
-    t.float    "credits"
     t.time     "start_time"
     t.time     "end_time"
+    t.integer  "max_slots"
+    t.float    "credits"
+    t.datetime "signup_deadline_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "meetings", force: true do |t|
-    t.date     "meeting_date"
-    t.boolean  "mandatory"
-    t.string   "day"
+    t.date     "meeting_date",                             null: false
+    t.time     "meeting_time",                             null: false
+    t.string   "description",  default: "General meeting"
+    t.boolean  "mandatory",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -69,7 +71,6 @@ ActiveRecord::Schema.define(version: 20150103001626) do
   end
 
   create_table "strikes", force: true do |t|
-    t.date     "date_given"
     t.string   "reason"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -77,22 +78,21 @@ ActiveRecord::Schema.define(version: 20150103001626) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "school_id"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.boolean  "admin"
+    t.string   "name"
+    t.string   "student_id"
+    t.boolean  "admin",                  default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

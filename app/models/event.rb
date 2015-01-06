@@ -4,18 +4,27 @@
 #
 #  id                   :integer          not null, primary key
 #  title                :string(255)
-#  descriprion          :string(255)
-#  max_slots            :integer
+#  description          :string(255)
+#  location             :string(255)
 #  event_date           :date
-#  signup_deadline_date :string(255)
-#  credits              :float
 #  start_time           :time
 #  end_time             :time
+#  max_slots            :integer
+#  credits              :float
+#  signup_deadline_date :datetime
 #  created_at           :datetime
 #  updated_at           :datetime
 #
 
 class Event < ActiveRecord::Base
-  has_many :users, :through => :signups
   has_many :signups
+  has_many :users, :through => :signups
+
+  def full?
+    self.signups.count >= self.max_slots
+  end
+
+  def slots_left
+    self.max_slots - self.signups.count
+  end
 end

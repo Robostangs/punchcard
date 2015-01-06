@@ -1,15 +1,20 @@
 Rails.application.routes.draw do
-
   ActiveAdmin.routes(self)
-  devise_for :users
-
-  resources :events do
+  devise_for :users, :controllers => { registrations: 'registrations' }
+  root 'meetings#index'
+  resources :users
+  resources :meetings do
     member do
-      patch 'signup'
-      patch 'backout'
+      get 'check'
     end
   end
 
+  resources :events do
+    member do
+      get 'signup'
+      get 'backout'
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

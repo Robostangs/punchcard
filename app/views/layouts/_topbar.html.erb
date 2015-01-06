@@ -1,0 +1,25 @@
+<nav class = "top-bar" data-topbar role = "navigation">
+  <ul class = "title-area">
+    <li class = "name">
+      <h1><a href = "#">Robostangs</a></h1>
+    </li>
+  </ul>
+  <section class = "top-bar-section">
+    <% if user_signed_in? %>
+      <ul class = "right">
+        <li><%= link_to("My account", user_path(current_user)) %></li>
+        <li><%= link_to("Sign out", destroy_user_session_path, :method => :delete) %>
+      </ul>
+      <ul class = "left">
+        <li><%= link_to("Meetings", meetings_path) %></li>
+        <li><%= link_to("Events", events_path) %></li>
+      </ul>
+    <% else %>
+      <ul class = "right">
+        <li><%= link_to("Sign in", new_user_session_path) %></li>
+        <li><%= link_to("Sign up", new_user_registration_path) %></li>
+        <li><%= link_to("Forgot password?", new_user_password_path) %></li>
+      </ul>
+    <% end %>
+  </section>
+</nav>

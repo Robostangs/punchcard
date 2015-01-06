@@ -3,11 +3,6 @@
 # Table name: users
 #
 #  id                     :integer          not null, primary key
-#  first_name             :string(255)
-#  last_name              :string(255)
-#  school_id              :string(255)
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
 #  email                  :string(255)      default(""), not null
 #  encrypted_password     :string(255)      default(""), not null
 #  reset_password_token   :string(255)
@@ -18,7 +13,17 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :string(255)
 #  last_sign_in_ip        :string(255)
-#  admin                  :boolean
+#  name                   :string(255)
+#  student_id             :string(255)
+#  admin                  :boolean          default(FALSE)
+#  created_at             :datetime
+#  updated_at             :datetime
+#
+# Indexes
+#
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
 
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
@@ -32,20 +37,14 @@ class User < ActiveRecord::Base
   has_many :events, :through => :signups
   has_many :meetings, :through => :attendances
 
-  def number_of_strikes
-    self.strikes.count
-  end
-
-  def full_name
-    self.first_name + ' ' + self.last_name
-  end
+  # One signup method?
 
   def signup_for(event)
-    if event.nil?                                           # Event doesn't exist
+    if event.nil? # Event doesn't exist
       false
-    elsif Signup.where({user: self, event: event}).any?     # Existing signup
+    elsif Signup.where({user: self, event: event}).any? # Existing signup
       false
-    elsif event.signup_deadline_date < Time.now             # Past deadline
+    elsif event.signup_deadline_date < Time.now # Past deadline
       false
     else
       Signup.create({user: self, event: event})
@@ -53,44 +52,58 @@ class User < ActiveRecord::Base
   end
 
   def backout_from(event)
-    if event.nil?                                           # Event doesn't exist
+    if event.nil? # Event doesn't exist
       false
-    elsif event.signup_deadline_date < Time.now             # Past deadline
+    elsif event.signup_deadline_date < Time.now # Past deadline
       false
     else
       Signup.where({user: self, event: event}).destroy_all
     end
   end
 
+  def number_of_strikes
+    self.strikes.count
+  end
+
   def confirmed_credits
-    confirmed_creditss = 0.0;
+    confirmed = 0.0
     self.signups.each do |signup|
-      if signup.confirmed then confirmed_creditss += signup.credits_earned end
+      if signup.confirmed then confirmed += signup.credits_earned.to_f end
     end
-    confirmed_creditss
+    confirmed
   end
 
   def pending_credits
-    pending_creditss = 0.0
-    self.singups.each do |signup|
-      if not signup.confirmed then pending_creditss += signup.credits_earned end
+    pending = 0.0
+    self.signups.each do |signup|
+      if not signup.confirmed then pending += signup.credits_earned.to_f end
     end
-    pending_creditss
+    pending
   end
 
   def total_credits
-    (self.pending_credits + self.confirmed_credits)
+    self.pending_credits + self.confirmed_credits
+  end
+
+  def meeting_statistic
+    present_at = 0
+    self.attendances.each { |attend| if attend.present then present_at += 1 end }
+    present_at.to_s + '/' + self.attendances.count.to_s
   end
 
   def meeting_attendance
     present_at = 0
     self.attendances.each { |attend| if attend.present then present_at += 1 end }
-    (present_at / self.attendances.count.to_f) * 100
+    if present_at == 0
+      '0%'
+    else
+      ((present_at / self.attendances.count) * 100).to_s + '%'
+    end
   end
 
   def missed_mandatory_meetings
     missed = 0
-    self.attendances.each { |attend| if attend.mandatory and not attend.present then missed += 1 end }
+    self.attendances.each { |attend| if attend.meeting.mandatory and not attend.present then missed += 1 end }
     missed
   end
 end

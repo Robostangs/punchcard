@@ -1,0 +1,9 @@
+<%# Rails flash messages styled for Zurb Foundation %>
+<% flash.each do |name, msg| %>
+  <% if msg.is_a?(String) %>
+    <div data-alert class="alert-box round <%= name.to_s == 'notice' ? 'success' : 'alert' %>" style = "width: 98%; text-align: center; margin-left: auto; margin-right: auto; margin-top: 1%;">
+        <%= content_tag :div, msg %>
+        <a href="#" class="close">&times;</a>
+    </div>
+  <% end %>
+<% end %>
