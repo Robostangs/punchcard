@@ -28,6 +28,7 @@
 FactoryGirl.define do
   factory :user do
     email { Faker::Internet.email }
+    student_id 20015476
     password "password"
     password_confirmation "password"
   end

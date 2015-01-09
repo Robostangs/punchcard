@@ -37,8 +37,6 @@ class User < ActiveRecord::Base
   has_many :events, :through => :signups
   has_many :meetings, :through => :attendances
 
-  # One signup method?
-
   def signup_for(event)
     if event.nil? # Event doesn't exist
       false
@@ -88,7 +86,7 @@ class User < ActiveRecord::Base
   def meeting_statistic
     present_at = 0
     self.attendances.each { |attend| if attend.present then present_at += 1 end }
-    present_at.to_s + '/' + self.attendances.count.to_s
+    present_at.to_s + '/' + Meeting.count.to_s
   end
 
   def meeting_attendance
@@ -97,13 +95,19 @@ class User < ActiveRecord::Base
     if present_at == 0
       '0%'
     else
-      ((present_at / self.attendances.count) * 100).to_s + '%'
+      (((present_at / Meeting.count) * 100).to_f).to_s + '%'
     end
   end
 
-  def missed_mandatory_meetings
-    missed = 0
-    self.attendances.each { |attend| if attend.meeting.mandatory and not attend.present then missed += 1 end }
-    missed
+#  def missed_mandatory_meetings
+#    missed = 0
+#    self.attendances.each { |attend| if attend.mandatory and not attend.present then missed += 1 end }
+#    missed
+#  end
+
+  def total_time
+    time_present = 0
+    self.attendances { |attend| if attend.present then time_present += attend.time_present end }
+    time_present
   end
 end

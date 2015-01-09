@@ -11,8 +11,10 @@ ActiveAdmin.register Signup do
       signup.user.name
     end
     column "Confirmed", :sortable => :confirmed do |signup|
-      if signup.confirmed then "Yes"
-      else "No"
+      if signup.confirmed then
+        "Yes"
+      else
+        "No"
       end
     end
     actions

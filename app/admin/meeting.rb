@@ -20,13 +20,8 @@ ActiveAdmin.register Meeting do
       row :meeting_time
       row :description
       row :mandatory
-      row :attended do |meeting|
-        meeting.attended
-      end
-      row :users_attended do |meeting|
-        meeting.attendances.each do |attendance|
-          attendance.user.name
-        end
+      row :attendances do |meeting|
+      link_to("Attendances", admin_meeting_attendances_path(meeting))
       end
     end
   end

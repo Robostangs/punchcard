@@ -17,17 +17,18 @@ class Meeting < ActiveRecord::Base
 
   def attended
     present = 0
-    total = self.attendances.count
     self.attendances.each do |attendance|
       if attendance.present?
         present += 1
       end
     end
-    present.to_s + '/' + total.to_s
+    present.to_s + '/' + User.count.to_s
   end
 
   def take_attendance(meeting, student_id)
-    if meeting.nil?
+    if not User.where({student_id: student_id}).first
+      "does not exist"
+    elsif (Attendance.where({user: User.where({student_id: student_id}).first, meeting: meeting}).first).present?
       false
     elsif Attendance.where({user: User.where({student_id: student_id}).first, meeting: meeting}).any?
       attendance = Attendance.where({user: User.where({student_id: student_id}).first, meeting: meeting}).first

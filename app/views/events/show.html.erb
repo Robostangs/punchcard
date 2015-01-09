@@ -20,7 +20,7 @@
   <% end %>
 </div>
 <% if @event.users.include? current_user %>
-  <%= link_to 'Remove myself from this event.', signup_event_path, :class => "button" %>
+  <%= link_to 'Remove myself from this event.', backout_event_path, :class => "button" %>
 <% else %>
-  <%= link_to 'Sign up for this event.', backout_event_path, :class => "button" %>
+  <%= link_to 'Sign up for this event.', signup_event_path, :class => "button" %>
 <% end %>
