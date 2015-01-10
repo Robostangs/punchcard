@@ -7,12 +7,13 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.find(params[:id])
     student_id = params['student_id']
     if not student_id == nil
-      if @meeting.take_attendance(@meeting, student_id) == "User does not exist"
-        flash[:notice] = "Student ID does not exist in database."
-      elsif @meeting.take_attendance(@meeting, student_id)
-        flash[:notice] = "Successfully checked in. Please check out when you are done or else you will not recieve credit."
-      elsif @meeting.take_attendance(@meeting, student_id) == false
-        flash[:notice] = "Successfully checked out."
+      flashAttendance = @meeting.take_attendance(@meeting, student_id).to_s
+      if flashAttendance == 'User does not exist.'
+        flash[:notice] = 'User does not exist.'
+      elsif flashAttendance == 'Checked out.'
+        flash[:notice] = 'Successfully checked out.'
+      elsif flashAttendance == 'Checked in.'
+        flash[:notice] = 'Successfully checked in.'
       end
     end
   end

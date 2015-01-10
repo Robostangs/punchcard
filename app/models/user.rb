@@ -95,7 +95,7 @@ class User < ActiveRecord::Base
     if present_at == 0
       '0%'
     else
-      (((present_at / Meeting.count.to_f) * 100).to_f).to_s + '%'
+      (((present_at / Meeting.count.to_f) * 100).to_f).round(2).to_s. + '%'
     end
   end
 
@@ -107,7 +107,7 @@ class User < ActiveRecord::Base
 
   def total_time
     time_present = 0.0
-    self.attendances { |attend| if attend.present then time_present += attend.time_present end }
-    time_present
+    self.attendances.each { |attend| if attend.present then time_present += attend.time_present end }
+    (time_present/60).round(2).to_s + ' minutes'
   end
 end

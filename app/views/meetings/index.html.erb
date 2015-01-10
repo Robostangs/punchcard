@@ -20,11 +20,11 @@
         <td><%= meeting.description %></td>
         <td><%= if meeting.mandatory? then 'Yes' else 'No' end %></td>
         <td><%= if (current_user.attendances.where(meeting_id: meeting.id)).present? then 'Yes' else 'No' end %></td>
-        <td>
         <% if current_user.admin? %>
-          <%= link_to "Take attendance for this meeting.", check_meeting_path(meeting.id) %>
+          <td>
+            <%= link_to "Take attendance for this meeting.", check_meeting_path(meeting.id) %>
+          </td>
         <% end %>
-        </td>
       </tr>
     <% end %>
   </tbody>

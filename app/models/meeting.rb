@@ -27,20 +27,20 @@ class Meeting < ActiveRecord::Base
 
   def take_attendance(meeting, student_id)
     if not User.where({student_id: student_id}).first
-      "User does not exist"
+      "User does not exist."
     elsif (Attendance.where({user: User.where({student_id: student_id}).first, meeting: meeting}).first).present?
-      false
+      "Checked out."
     elsif Attendance.where({user: User.where({student_id: student_id}).first, meeting: meeting}).any?
       attendance = Attendance.where({user: User.where({student_id: student_id}).first, meeting: meeting}).first
       attendance.present = true
       attendance.out_time = Time.now
       attendance.save
-      false
+      "Checked out."
     else
       attendance = Attendance.create({user: User.where({student_id: student_id}).first, meeting: meeting})
       attendance.in_time = Time.now
       attendance.save
-      true
+      "Checked in."
     end
   end
 end

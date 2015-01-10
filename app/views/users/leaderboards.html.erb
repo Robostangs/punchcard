@@ -1,0 +1,16 @@
+<h3>Leaderboards - Time present</h3>
+<table style = "width: 100%; text-align: center;">
+  <thread>
+    <tr>
+      <th width = "150">Name</th>
+      <th width = "150">Time present</th>
+    </tr>
+  </thread>
+  <tbody>
+    <% @user.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.total_time %></td>
+      </tr>
+    <% end %>
+</table>
