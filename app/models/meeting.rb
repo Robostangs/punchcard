@@ -27,7 +27,7 @@ class Meeting < ActiveRecord::Base
 
   def take_attendance(meeting, student_id)
     if not User.where({student_id: student_id}).first
-      "does not exist"
+      "User does not exist"
     elsif (Attendance.where({user: User.where({student_id: student_id}).first, meeting: meeting}).first).present?
       false
     elsif Attendance.where({user: User.where({student_id: student_id}).first, meeting: meeting}).any?

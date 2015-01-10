@@ -95,18 +95,18 @@ class User < ActiveRecord::Base
     if present_at == 0
       '0%'
     else
-      (((present_at / Meeting.count) * 100).to_f).to_s + '%'
+      (((present_at / Meeting.count.to_f) * 100).to_f).to_s + '%'
     end
   end
 
-#  def missed_mandatory_meetings
-#    missed = 0
-#    self.attendances.each { |attend| if attend.mandatory and not attend.present then missed += 1 end }
-#    missed
-#  end
+ def missed_mandatory_meetings
+    missed = 0
+    Meeting.all.each { |meeting| if meeting.mandatory and not (Attendance.where({meeting: meeting, user: self}).first).present? then missed += 1 end }
+    missed
+  end
 
   def total_time
-    time_present = 0
+    time_present = 0.0
     self.attendances { |attend| if attend.present then time_present += attend.time_present end }
     time_present
   end

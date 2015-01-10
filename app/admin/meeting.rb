@@ -21,7 +21,7 @@ ActiveAdmin.register Meeting do
       row :description
       row :mandatory
       row :attendances do |meeting|
-      link_to("Attendances", admin_meeting_attendances_path(meeting))
+        link_to("Attendances", admin_meeting_attendances_path(meeting))
       end
     end
   end

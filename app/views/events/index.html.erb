@@ -12,14 +12,16 @@
   </thread>
   <tbody>
     <% @event.each do |event| %>
-    <tr>
-      <td><%= event.event_date %></td>
-      <td><%= event.start_time %></td>
-      <td><%= event.end_time %></td>
-      <td><u><%= link_to event.title, event %></u></td>
-      <td><%= event.slots_left %></td>
-      <td><%= event.credits %></td>
-    </tr>
+      <% if event.event_date > Time.now %>
+        <tr>
+          <td><%= event.event_date %></td>
+          <td><%= event.start_time %></td>
+          <td><%= event.end_time %></td>
+          <td><u><%= link_to event.title, event %></u></td>
+          <td><%= event.slots_left %></td>
+          <td><%= event.credits %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
