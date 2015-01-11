@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :users, :controllers => { registrations: 'registrations' }
   root 'meetings#index'
-  resources :users
+  resources :users do
+    member do
+      get 'leaderboards'
+    end
+  end
+  
   resources :meetings do
     member do
       get 'check'

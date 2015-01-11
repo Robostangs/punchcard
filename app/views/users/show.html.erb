@@ -15,7 +15,9 @@
   <h1>Meeting info</h1>
   <b>Meeting attendance statistic: </b><%= @user.meeting_statistic %><br>
   <b>Meeting attendance percentage: </b><%= @user.meeting_attendance %><br>
+  <b>Missed mandatory meetings: </b><%= @user.missed_mandatory_meetings %><br>
   <b>Total time present: </b><%= @user.total_time %>
+  <%= link_to "Leaderboards",  leaderboards_user_path %>
 </div>
 
 <div class = "panel">
