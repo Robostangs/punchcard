@@ -1,21 +1,32 @@
 <% if current_user.admin? %>
-  <h3>Check in for meeting on <%= @meeting.meeting_date %></h3>
   <style>
     .top-bar{
       display: none;
     }
+    input[type="text"] {
+      width: 200px;
+    }
+    .centerVertical{
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   </style>
   <script>
     window.onload = function(){
-      var text_input = document.getElementById ('student_id');
-      text_input.focus();
-      text_input.select();
-  }
+        var text_input = document.getElementById ('student_id');
+        text_input.focus();
+        text_input.select();
+    }
   </script>
-  </script>
-  <form>
-    Your student ID?: <br>
-    <input type = "text" name = "student_id" id = "student_id">
-    <input type = "submit" name = "submit">
-  </form>
+  <div class = "centerVertical">
+    <center>
+      <h3>Check in for meeting on <%= @meeting.meeting_date %></h3>
+      <form>
+        Your student ID?: <br>
+        <input type = "text" name = "student_id" id = "student_id">
+        <input type = "submit" name = "submit">
+      </form>
+    </center>
+  </div>
 <% end %>
