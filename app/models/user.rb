@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
       "Past deadline."
     else
       Signup.create({user: self, event: event})
+      "Successfully signed up."
     end
   end
 
@@ -58,6 +59,7 @@ class User < ActiveRecord::Base
       "You are already confirmed."
     else
       Signup.where({user: self, event: event}).destroy_all
+      "Successfully backed out."
     end
   end
 
