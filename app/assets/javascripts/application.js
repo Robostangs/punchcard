@@ -20,4 +20,4 @@ $(function(){ $(document).foundation(); });
 
 setTimeout(function() {
   $('.alert-box').fadeOut();
-}, '1750');
+}, '2000');
