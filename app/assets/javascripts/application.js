@@ -18,8 +18,6 @@
 
 $(function(){ $(document).foundation(); });
 
-$('.alert-box').fadeIn(function() {
-  setTimeout(function() {
-    $('.alert-box').fadeOut();
-  }, '2000');
-});
+setTimeout(function() {
+  $('.alert-box').fadeOut();
+}, '1750');

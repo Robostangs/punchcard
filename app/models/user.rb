@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
     end
   end
 
- def missed_mandatory_meetings
+  def missed_mandatory_meetings
     missed = 0
     Meeting.all.each { |meeting| if meeting.mandatory and not (Attendance.where({meeting: meeting, user: self}).first).present? then missed += 1 end }
     missed
@@ -107,7 +107,11 @@ class User < ActiveRecord::Base
 
   def total_time
     time_present = 0.0
-    self.attendances.each { |attend| if attend.present then time_present += attend.time_present end }
+    self.attendances.each do |attend|
+      if attend.present and not attend.in_time.nil?
+        time_present += attend.time_present
+      end
+    end
     (time_present/60).round(2).to_s + ' minutes'
   end
 end

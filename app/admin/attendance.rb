@@ -22,4 +22,26 @@ ActiveAdmin.register Attendance do
     end
     actions
   end
+
+  batch_action :confirm do |selection|
+    Attendance.find(selection).each do |attendance|
+      attendance.present = true
+      attendance.save
+    end
+    redirect_to :back
+  end
+
+  action_item :only => :index do
+    link_to 'Add all users to meeting', :action => 'add_users'
+  end
+
+  collection_action :add_users do
+    meeting = Meeting.where({id: params[:meeting_id]}).first
+    User.all.each do |user|
+      if not Attendance.where({user: user, meeting: meeting}).any?
+        attendance = Attendance.create({user: user, meeting: meeting})
+      end
+    end
+    redirect_to :action => :index
+  end
 end
