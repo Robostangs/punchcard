@@ -16,13 +16,13 @@
     <% @meeting.each do |meeting| %>
       <tr>
         <td><%= meeting.meeting_date %></td>
-        <td><%= meeting.meeting_time %></td>
+        <td><%= meeting.meeting_time.strftime("%l:%M %p") %></td>
         <td><%= meeting.description %></td>
         <td><%= if meeting.mandatory? then 'Yes' else 'No' end %></td>
         <td><%= if (current_user.attendances.where(meeting_id: meeting.id)).present? then 'Yes' else 'No' end %></td>
         <% if current_user.admin? %>
           <td>
-            <%= link_to "Take attendance for this meeting.", check_meeting_path(meeting.id) %>
+            <%= link_to "Start taking attendance.", check_meeting_path(meeting.id) %>
           </td>
         <% end %>
       </tr>

@@ -3,8 +3,8 @@
   <b>Description: </b><%= @event.description %><br>
   <b>Location: </b><%= @event.location %><br>
   <b>Event date: </b><%= @event.event_date %><br>
-  <b>Start time: </b><%= @event.start_time %><br>
-  <b>End time: </b><%= @event.end_time %><br>
+  <b>Start time: </b><%= @event.start_time.strftime("%l:%M %p") %><br>
+  <b>End time: </b><%= @event.end_time.strftime("%l:%M %p") %><br>
   <b>Credits: </b><%= @event.credits %><br>
   <b>Max slots: </b><%= @event.max_slots %><br>
 </div>
