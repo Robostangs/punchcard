@@ -32,10 +32,10 @@ ActiveAdmin.register Attendance do
   end
 
   action_item :only => :index do
-    link_to 'Add all users to meeting', :action => 'add_users'
+    link_to 'Add all users to meeting', :action => 'add_all_users'
   end
 
-  collection_action :add_users do
+  collection_action :add_all_users do
     meeting = Meeting.where({id: params[:meeting_id]}).first
     User.all.each do |user|
       if not Attendance.where({user: user, meeting: meeting}).any?

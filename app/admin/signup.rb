@@ -35,4 +35,18 @@ ActiveAdmin.register Signup do
     end
     redirect_to :back
   end
+
+  action_item :only => :index do
+    link_to 'Add all users to event', :action => 'add_all_users'
+  end
+
+  collection_action :add_all_users do
+    event = Event.where({id: params[:event_id]}).first
+    User.all.each do |user|
+      if not Signup.where({user: user, event: event}).any?
+        signup = Signup.create({user: user, event: event})
+      end
+    end
+    redirect_to :action => :index
+  end
 end
